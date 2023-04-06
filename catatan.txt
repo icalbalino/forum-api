@@ -1,0 +1,37 @@
+npm init -y
+npm install @hapi/hapi @hapi/jwt bcrypt dotenv nanoid@3.x.x pg
+npm install @types/jest eslint jest node-pg-migrate nodemon --save-dev
+npx eslint --init
+
+psql --username postgres
+CREATE DATABASE forumapi; CREATE DATABASE forumapi_test;
+GRANT ALL PRIVILEGES ON DATABASE forumapi, forumapi_test TO icalbalino;
+
+<database_name>=#
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO icalbalino;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO icalbalino;
+GRANT ALL PRIVILEGES ON SCHEMA public TO icalbalino;
+
+psql -U icalbalino -h localhost -d forumapi
+\l
+\du
+\dt
+
+//buat migrations
+npm run migrate create "create table users"
+npm run migrate create "create table authentications"
+npm run migrate create "create table threads"
+npm run migrate create "create table comments"
+npm run migrate create "create table replies"
+npm run migrate up
+npm run migrate down
+
+select * from users;
+select * from authentications;
+select * from threads;
+select * from comments;
+select * from replies;
+truncate table users, authentications, threads, comments, replies;
+drop table users, authentications, threads, comments, replies;
+
+Mengubah pola regex /^[a-zA-Z1-9_]+$/ menggunakan /^[\w]+$/ (cara cepat untuk pola a-zA-Z1-9_).
